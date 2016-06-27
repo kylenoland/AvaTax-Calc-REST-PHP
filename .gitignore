@@ -167,3 +167,4 @@ Samples/composer.json
 Samples/vendor/
 Samples/composer.lock
 vendor/
+.idea/

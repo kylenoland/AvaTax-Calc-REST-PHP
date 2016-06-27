@@ -16,27 +16,59 @@ namespace AvaTax;
 
 class AddressType extends Enum
 {
-	public static $FirmOrCompany 	= 'F';
-	public static $GeneralDelivery 	= 'G';
-	public static $HighRise         = 'H';
-	public static $POBox            = 'P';
-	public static $RuralRoute       = 'R';
+	/**
+	 * @var string
+	 */
+	public static $FirmOrCompany = 'F';
+
+	/**
+	 * @var string
+	 */
+	public static $GeneralDelivery = 'G';
+
+	/**
+	 * @var string
+	 */
+	public static $HighRise = 'H';
+
+	/**
+	 * @var string
+	 */
+	public static $POBox = 'P';
+
+	/**
+	 * @var string
+	 */
+	public static $RuralRoute = 'R';
+
+	/**
+	 * @var string
+	 */
 	public static $StreetOrResidential = 'S';
 
+	/**
+	 * @return array
+	 */
 	public static function Values()
 	{
 		return array(
-		'FirmOrCompany'         => AddressType::$FirmOrCompany,
-		'GeneralDelivery'       => AddressType::$GeneralDelivery,
-		'HighRise'              => AddressType::$HighRise,
-		'POBox'                 => AddressType::$POBox,
-		'RuralRoute'            => AddressType::$RuralRoute,
-		'StreetOrResidential'   => AddressType::$StreetOrResidential
+			'FirmOrCompany' => AddressType::$FirmOrCompany,
+			'GeneralDelivery' => AddressType::$GeneralDelivery,
+			'HighRise' => AddressType::$HighRise,
+			'POBox' => AddressType::$POBox,
+			'RuralRoute' => AddressType::$RuralRoute,
+			'StreetOrResidential' => AddressType::$StreetOrResidential
 		);
 	}
 
-	// Unfortunate boiler plate due to polymorphism issues on static functions
-	public static function Validate($value) { self::__Validate($value,self::Values(),__CLASS__); }
+	/**
+	 * @param $value
+	 * @throws Exception
+	 */
+	public static function Validate($value)
+	{
+		self::__Validate($value, self::Values(), __CLASS__);
+	}
 }
 
 ?>

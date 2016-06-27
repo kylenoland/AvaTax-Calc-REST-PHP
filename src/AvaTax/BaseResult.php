@@ -15,8 +15,11 @@ namespace AvaTax;
 
 class BaseResult implements JsonSerializable
 {
-
-	public function jsonSerialize(){
+	/**
+	 * @return array
+	 */
+	public function jsonSerialize()
+	{
 		return array(
 			'TransactionId' => $this->getTransactionId(),
 			'ResultCode' => $this->getResultCode(),
@@ -24,22 +27,32 @@ class BaseResult implements JsonSerializable
 		);
 	}
 
-/**
- * A unique Transaction ID identifying a specific request/response set. Deprecated.
- * @return string
- */
-	public function getTransactionId() { return $this->TransactionId; }
-/**
- * Indicates whether operation was successfully completed or not.
- * @return string
- */
-	public function getResultCode() { return $this->ResultCode; }
-/**
- * Accessor
- * @return array
- */
-	public function getMessages() { return AvaFunctions::EnsureIsArray($this->Messages->Message); }
+	/**
+	 * A unique Transaction ID identifying a specific request/response set. Deprecated.
+	 * @return string
+	 */
+	public function getTransactionId()
+	{
+		return $this->TransactionId;
+	}
 
+	/**
+	 * Indicates whether operation was successfully completed or not.
+	 * @return string
+	 */
+	public function getResultCode()
+	{
+		return $this->ResultCode;
+	}
+
+	/**
+	 * Accessor
+	 * @return array
+	 */
+	public function getMessages()
+	{
+		return AvaFunctions::EnsureIsArray($this->Messages->Message);
+	}
 }
 
 ?>

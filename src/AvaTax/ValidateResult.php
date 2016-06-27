@@ -33,39 +33,66 @@ namespace AvaTax;
 
 class ValidateResult extends BaseResult implements JsonSerializable
 {
-/**
- * Array of matching {@link ValidAddress}'s.
- * @var array
- */
+	/**
+	 * @var ValidAddress
+	 */
 	private $ValidAddress;
+
+	/**
+	 * @var string
+	 */
 	private $ResultCode = 'Success';
+
+	/**
+	 * @var array
+	 */
 	private $Messages = array();
 
-	public function __construct($resultCode , $validaddress , $messages)
+	/**
+	 * @param $resultCode
+	 * @param $validAddress
+	 * @param array $messages
+	 */
+	public function __construct($resultCode , $validAddress , $messages)
 	{
 		$this->ResultCode = $resultCode;
-		$this->ValidAddress = $validaddress;
+		$this->ValidAddress = $validAddress;
 		$this->Messages = $messages;
 	}
-	
-	
-		//Helper function to decode result objects from Json responses to specific objects.
+
+	/**
+	 * Helper function to decode result objects from Json responses to specific objects.
+	 *
+	 * @param string $jsonString
+	 * @return ValidateResult
+	 */
 	public static function parseResult($jsonString)
 	{
 		$object = json_decode($jsonString);
-		$validaddress = new ValidAddress();
+		$validAddress = new ValidAddress();
 		$messages = array();
-		$resultcode = null;
+		$resultCode = null;
 		
-		if( property_exists($object,"ResultCode")) $resultcode = $object->ResultCode; 		
-		if(property_exists($object, "Address"))
-			$validaddress = ValidAddress::parseAddress(json_encode($object->Address));	
-		if(property_exists($object, "Messages"))
+		if( property_exists($object,"ResultCode")) {
+			$resultCode = $object->ResultCode;
+		}
+
+		if(property_exists($object, "Address")) {
+			$validAddress = ValidAddress::parseAddress(json_encode($object->Address));
+		}
+
+		if(property_exists($object, "Messages")) {
 			$messages = Message::parseMessages("{\"Messages\": ".json_encode($object->Messages)."}");
-		
-		return new self( $resultcode , $validaddress , $messages );	
+		}
+
+		return new self( $resultCode , $validAddress , $messages );
 	}
-	public function jsonSerialize(){
+
+	/**
+	 * @return array
+	 */
+	public function jsonSerialize()
+	{
 		return array(
 			'ValidAddress' => $this->getValidAddress(),
 			'ResultCode' => $this->getResultCode(),
@@ -73,10 +100,29 @@ class ValidateResult extends BaseResult implements JsonSerializable
 		);
 	}
 
-	public function getValidAddress() { return $this->ValidAddress; }
-	public function getResultCode() { return $this->ResultCode; }
-	public function getMessages() { return $this->Messages; }
+	/**
+	 * @return ValidAddress
+	 */
+	public function getValidAddress()
+	{
+		return $this->ValidAddress;
+	}
 
+	/**
+	 * @return string
+	 */
+	public function getResultCode()
+	{
+		return $this->ResultCode;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getMessages()
+	{
+		return $this->Messages;
+	}
 }
 
 ?>
